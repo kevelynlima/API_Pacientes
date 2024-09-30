@@ -1,11 +1,11 @@
-import * as db from './repository/PacientesRepository.js'; 
+import * as db from '../repository/historioSaudeRepository.js';
 
 import { Router } from 'express';
 const endpoints = Router (); 
 
-endpoints.get ('/Pacientes', async (req, resp) => {
+endpoints.get ('/Antecedentes', async (req, resp) => {
     try {
-        let registros = await db.consultarPacientes ();
+        let registros = await db.consultarHistorico();
         resp.send (registros); 
     }
     catch (err) {
@@ -16,11 +16,11 @@ endpoints.get ('/Pacientes', async (req, resp) => {
 })
 
 
-endpoints.post ('/Pacientes/', async (req, resp) => {
+endpoints.post ('/Antecedentes/', async (req, resp) => {
     try {
-        let pessoa = req.body; 
+        let prontuario = req.body; 
 
-        let id = await db.inserirPacientes (pessoa); 
+        let id = await db.inserirHistorico(prontuario); 
 
         resp.send({
             novoId: id 
@@ -34,12 +34,12 @@ endpoints.post ('/Pacientes/', async (req, resp) => {
 })
 
 
-endpoints.put ('/Pacientes/: id', async (req, resp) => {
+endpoints.put ('/Antecedentes/: id', async (req, resp) => {
     try {
         let id = req.params.id; 
-        let pessoa = req.body; 
+        let prontuario = req.body; 
 
-        let linhasAfetadas = await db.alterarPacientes(id, pessoa); 
+        let linhasAfetadas = await db.alterarHistorico(id, prontuario); 
         if(linhasAfetadas >= 1){
             resp.send ();
         }
@@ -55,16 +55,16 @@ endpoints.put ('/Pacientes/: id', async (req, resp) => {
 })
 
 
-endpoints.delete ('/Pacientes/:id', async (req, resp) => {
+endpoints.delete ('/Antecedentes/:id', async (req, resp) => {
     try {
         let id = req.params.id; 
 
-        let linhasAfetadas = await db.removerPacientes (id);
+        let linhasAfetadas = await db.removerHistorico(id);
         if (linhasAfetadas >= 1) {
             resp.send ();
         }
         else {
-            resp.status (404).send ({erro: 'Nenhum registro encontrado'})
+            resp.status (404).send ({erro: 'Este paciente não faz mais parte do nosso quadro'})
         }
     }
     catch (err) {
@@ -73,8 +73,6 @@ endpoints.delete ('/Pacientes/:id', async (req, resp) => {
         })
     }
 })
-
-
 
 
 export default endpoints; 

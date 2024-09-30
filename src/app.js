@@ -3,7 +3,7 @@ import express from 'express'
 import cors from 'cors'
 
 import adicionarRotas from './rotas.js'
-import { escape } from 'mysql2'
+
 
 
 const servidor = express (); 
