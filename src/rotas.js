@@ -1,6 +1,8 @@
-import PacientesController from  './controller/PacientesController.js'
+import historicoSaude from  './controller/historicoSaudeController.js'
 
 
 export default function adicionarRotas (servidor){
-    servidor.use (PacientesController); 
+    servidor.use (historicoSaude); 
 }
+
+
